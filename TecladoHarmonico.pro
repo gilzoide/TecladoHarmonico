@@ -4,7 +4,8 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    hexagon.cpp
+    hexagon.cpp \
+    qfluidsynth.cpp
 
 RESOURCES += qml.qrc
 
@@ -31,4 +32,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    hexagon.h
+    hexagon.h \
+    qfluidsynth.h
+
+# Link to external libraries (fluidsynth)
+CONFIG += link_pkgconfig
+PKGCONFIG += fluidsynth

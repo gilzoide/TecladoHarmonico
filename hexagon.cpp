@@ -4,42 +4,42 @@
 
 #include <cmath>
 
-qreal Hexagon::getRaio() {
-    return raio;
+qreal Hexagon::getRadius() {
+    return radius;
 }
 
-void Hexagon::setRaio(qreal raio) {
-    this->raio = raio;
+void Hexagon::setRadius(qreal radius) {
+    this->radius = radius;
     // acha medidas importantes
-    W = 2 * raio;
-    S = 1.5 * raio;
-    H = sqrt(3) * raio;
-    setImplicitHeight(H);
-    setImplicitWidth(W);
-    emit raioChanged();
+    W = 2 * radius;
+    S = 1.5 * radius;
+    H = sqrt(3) * radius;
+    setImplicitHeight(H + 1);
+    setImplicitWidth(W + 1);
+    emit radiusChanged();
 }
 
-QColor Hexagon::getCor() {
-    return cor;
+QColor Hexagon::getColor() {
+    return color;
 }
 
-void Hexagon::setCor(const QColor& cor) {
-    this->cor = cor;
-    emit corChanged();
+void Hexagon::setColor(const QColor& color) {
+    this->color = color;
+    emit colorChanged();
 }
 
 void Hexagon::paint(QPainter *painter) {
-    const qreal meioH = H / 2;
-    const qreal s_raio = S - raio;
+    const qreal halfH = H / 2;
+    const qreal s_radius = S - radius;
     static QPointF points[] = {
-        QPointF(0, meioH),
-        QPointF(s_raio, 0),
+        QPointF(0, halfH),
+        QPointF(s_radius, 0),
         QPointF(S, 0),
-        QPointF(W, meioH),
+        QPointF(W, halfH),
         QPointF(S, H),
-        QPointF(s_raio, H),
+        QPointF(s_radius, H),
     };
 
-    painter->setPen(cor);
+    painter->setPen(color);
     painter->drawPolygon(points, 6);
 }
