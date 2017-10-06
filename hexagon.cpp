@@ -4,22 +4,34 @@
 
 #include <cmath>
 
-qreal Hexagon::getRadius() {
+qreal Hexagon::getRadius() const {
     return radius;
 }
 
 void Hexagon::setRadius(qreal radius) {
     this->radius = radius;
     // acha medidas importantes
-    W = 2 * radius;
-    S = 1.5 * radius;
-    H = sqrt(3) * radius;
+    W = 2 * radius; emit WChanged();
+    S = 1.5 * radius; emit SChanged();
+    H = sqrt(3) * radius; emit HChanged();
     setImplicitHeight(H + 1);
     setImplicitWidth(W + 1);
     emit radiusChanged();
 }
 
-QColor Hexagon::getColor() {
+qreal Hexagon::getW() const {
+    return W;
+}
+
+qreal Hexagon::getS() const {
+    return S;
+}
+
+qreal Hexagon::getH() const {
+    return H;
+}
+
+QColor Hexagon::getColor() const {
     return color;
 }
 
