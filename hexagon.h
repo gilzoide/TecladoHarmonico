@@ -3,13 +3,18 @@
 
 #include <QQuickPaintedItem>
 
+#include <cmath>
+
 class Hexagon : public QQuickPaintedItem {
     Q_OBJECT
     Q_PROPERTY(qreal radius READ getRadius WRITE setRadius NOTIFY radiusChanged)
+    /// Important measures used for some calculations. See: http://blog.ruslans.com/2011/02/hexagonal-grid-math.html
     Q_PROPERTY(qreal W READ getW NOTIFY WChanged)
     Q_PROPERTY(qreal S READ getS NOTIFY SChanged)
     Q_PROPERTY(qreal H READ getH NOTIFY HChanged)
-    Q_PROPERTY(QColor color READ getColor WRITE setColor NOTIFY colorChanged)
+
+    Q_PROPERTY(QColor lineColor READ getLineColor WRITE setLineColor NOTIFY lineColorChanged)
+    Q_PROPERTY(QColor fillColor READ getFillColor WRITE setFillColor NOTIFY fillColorChanged)
 
 public:
     void paint(QPainter *painter) override;
@@ -21,22 +26,26 @@ public:
     qreal getS() const;
     qreal getH() const;
 
-    QColor getColor() const;
-    void setColor(const QColor& color);
+    QColor getLineColor() const;
+    QColor getFillColor() const;
+    void setLineColor(const QColor& color);
+    void setFillColor(const QColor& color);
 
 signals:
     void radiusChanged();
     void WChanged();
     void SChanged();
     void HChanged();
-    void colorChanged();
+    void lineColorChanged();
+    void fillColorChanged();
 
 private:
+    /// Hexagon radius
     qreal radius;
-    /// Medidas importantes pra vários cálculos. Veja: http://blog.ruslans.com/2011/02/hexagonal-grid-math.html
-    qreal W, S, H;
-    /// Cor do traçado
-    QColor color;
+    /// Line color
+    QColor lineColor;
+    /// Fill color
+    QColor fillColor;
 };
 
 #endif // HEXAGON_H

@@ -2,56 +2,71 @@
 
 #include <QPainter>
 
-#include <cmath>
-
 qreal Hexagon::getRadius() const {
     return radius;
 }
 
 void Hexagon::setRadius(qreal radius) {
     this->radius = radius;
-    // acha medidas importantes
-    W = 2 * radius; emit WChanged();
-    S = 1.5 * radius; emit SChanged();
-    H = sqrt(3) * radius; emit HChanged();
-    setImplicitHeight(H + 1);
-    setImplicitWidth(W + 1);
     emit radiusChanged();
+
+    setImplicitHeight(getH() + 1);
+    setImplicitWidth(getW() + 1);
+
+    emit WChanged();
+    emit SChanged();
+    emit HChanged();
 }
 
 qreal Hexagon::getW() const {
-    return W;
+    return 2 * radius;
 }
 
 qreal Hexagon::getS() const {
-    return S;
+    return 1.5 * radius;
 }
 
 qreal Hexagon::getH() const {
-    return H;
+    return sqrt(3) * radius;
 }
 
-QColor Hexagon::getColor() const {
-    return color;
+QColor Hexagon::getLineColor() const {
+    return lineColor;
 }
 
-void Hexagon::setColor(const QColor& color) {
-    this->color = color;
-    emit colorChanged();
+QColor Hexagon::getFillColor() const {
+    return fillColor;
+}
+
+void Hexagon::setLineColor(const QColor& color) {
+    lineColor = color;
+    emit lineColorChanged();
+}
+
+void Hexagon::setFillColor(const QColor& color) {
+    fillColor = color;
+    emit fillColorChanged();
 }
 
 void Hexagon::paint(QPainter *painter) {
+    const qreal H = getH(), S = getS(), W = getW();
     const qreal halfH = H / 2;
     const qreal s_radius = S - radius;
-    static QPointF points[] = {
+
+    const QVector<QPointF> points = {
         QPointF(0, halfH),
         QPointF(s_radius, 0),
         QPointF(S, 0),
         QPointF(W, halfH),
         QPointF(S, H),
         QPointF(s_radius, H),
+        QPointF(0, halfH),
     };
+    const QPolygonF poly(points);
+    QPainterPath path;
+    path.addPolygon(poly);
 
-    painter->setPen(color);
-    painter->drawPolygon(points, 6);
+    painter->fillPath(path, fillColor);
+    painter->setPen(lineColor);
+    painter->drawPath(path);
 }
