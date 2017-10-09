@@ -7,5 +7,6 @@ Hexagon {
 
     function toggle() {
         pressed = !pressed;
+        return pressed;
     }
 }

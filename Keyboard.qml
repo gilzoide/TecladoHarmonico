@@ -3,6 +3,10 @@ import com.gilzoide.hexagon 0.1
 
 Item {
     id: board
+
+    signal keyOn(int index)
+    signal keyOff(int index)
+
     property real radius: 20
     property int numColumns: 10
     property int numLines: 10
@@ -59,7 +63,12 @@ Item {
             var index = getIndex(mouse.x, mouse.y);
             var hex = keys.itemAt(index);
             if(hex) {
-                hex.toggle();
+                if(hex.toggle()) {
+                    keyOn(index);
+                }
+                else {
+                    keyOff(index);
+                }
                 hex.update();
             }
         }

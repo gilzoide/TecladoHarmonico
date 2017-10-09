@@ -5,7 +5,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     hexagon.cpp \
-    qfluidsynth.cpp
+    qjack.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,8 +33,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     hexagon.h \
-    qfluidsynth.h
+    qjack.h
 
 # Link to external libraries (fluidsynth)
 CONFIG += link_pkgconfig
-PKGCONFIG += fluidsynth
+PKGCONFIG += jack
